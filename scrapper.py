@@ -12,14 +12,31 @@ root_dir = os.path.abspath("./verba-idenizatoria-2026")
 custom_dir = os.path.abspath("./downloads")
 os.makedirs(custom_dir, exist_ok=True)
 
-options = webdriver.FirefoxOptions()
+# options = webdriver.FirefoxOptions()
 
-# 0 = Desktop, 1 = Downloads folder, 2 = Custom directory
-options.set_preference("browser.download.folderList", 2)
-options.set_preference("browser.download.dir", custom_dir)
-options.set_preference("browser.download.manager.showWhenStarting", False)
+# # 0 = Desktop, 1 = Downloads folder, 2 = Custom directory
+# options.set_preference("browser.download.folderList", 2)
+# options.set_preference("browser.download.dir", custom_dir)
+# options.set_preference("browser.download.manager.showWhenStarting", False)
 
-driver = webdriver.Firefox(options=options)
+# driver = webdriver.Firefox(options=options)
+# wait = WebDriverWait(driver, 20)
+
+options = webdriver.ChromeOptions()
+
+# Define download behavior in a dictionary
+prefs = {
+    "download.default_directory": custom_dir, # Sets the custom download path
+    "download.prompt_for_download": False,    # Disables the 'Save As' popup
+    "download.directory_upgrade": True,        # Ensures the directory is used
+    "safebrowsing.enabled": True               # Optional: handles security warnings
+}
+
+# Add preferences to options
+options.add_experimental_option("prefs", prefs)
+
+# Initialize the Chrome driver
+driver = webdriver.Chrome(options=options) 
 wait = WebDriverWait(driver, 20)
 
 try:
@@ -59,7 +76,7 @@ try:
 
     print(f"\nEncontrados {len(vereadores)} vereadores:\n")
 
-    index = vereadores.index("Gilson Machado Filho")
+    index = vereadores.index("Professora Ana Lúcia")
     vereadores = vereadores[index:-1]
 
     print(vereadores)
