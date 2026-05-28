@@ -76,7 +76,7 @@ try:
 
     print(f"\nEncontrados {len(vereadores)} vereadores:\n")
 
-    index = vereadores.index("Professora Ana Lúcia")
+    index = vereadores.index("Zé Neto") -1
     vereadores = vereadores[index:-1]
 
     print(vereadores)
